@@ -111,3 +111,23 @@ int main(){
 
 
 //various questions on linked list
+//find middle element of linked list.
+
+int getMiddle(Node *head)
+    {
+        if(head == NULL){
+            return -1;
+        }
+        Node* sp=head;
+        Node* fp=head;
+        
+        int c=1;
+        
+        while(fp != NULL && fp->next !=NULL){
+            sp=sp->next;
+            fp=fp->next->next;
+            c++;
+        }
+        
+        return sp->data;
+    }
