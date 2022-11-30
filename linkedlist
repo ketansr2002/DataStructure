@@ -4,108 +4,108 @@ using namespace std;
 
 //declaring a class node which is individual node of a linked list
 //constructor is also made to intialise the node , destructor is optional
-class node{
-    public:
-    int val;
-    node* next;
+    class node{
+        public:
+        int val;
+        node* next;
 
-    node(int data){
-        val=data;
-        next=NULL;
+        node(int data){
+            val=data;
+            next=NULL;
+        }
+
+    };
+
+    void insertAtTail(node* &head,int val){
+
+        //instance of a node is created which is later connnected to the link list
+        node* n=new node(val);
+        if(head==NULL){
+            head=n;
+            return;
+        }
+        node* temp=head;
+        while(temp->next !=NULL){
+            temp=temp->next;
+        }
+        temp->next=n;
     }
 
-};
-
-void insertAtTail(node* &head,int val){
-
-    //instance of a node is created which is later connnected to the link list
-    node* n=new node(val);
-    if(head==NULL){
+    void insertAtHead(node* &head,int val){
+        node* n=new node(val);
+        n->next=head;
         head=n;
-        return;
-    }
-    node* temp=head;
-    while(temp->next !=NULL){
-        temp=temp->next;
-    }
-    temp->next=n;
-}
-
-void insertAtHead(node* &head,int val){
-    node* n=new node(val);
-    n->next=head;
-    head=n;
-}
-
-void insertInBetween(node* &head,int idx,int val){
-    node* n=new node(val);
-    node* temp=head;
-
-    while(idx--){
-        temp=temp->next;
-    }
-    n->next=temp->next;
-    temp->next=n;
-}
-
-void deleteFromHead(node* &head){
-    node* temp=head;
-    head=head->next;
-    temp->next=NULL;
-    
-    delete temp;
-}
-
-void deleteFromTail(node* &head){
-    node* temp=head;
-
-    while(temp->next->next != NULL){
-        temp=temp->next;
-    }
-    node* deletePtr=temp->next;
-    temp->next=NULL;
-    delete deletePtr;
-}
-
-void deleteFromBetween(node* &head,int idx){
-    node* temp=head;
-    node* deletePtr=NULL;
-    //we will access the node previous to the node that needs to be deleted
-    idx--;
-
-    while(idx--){
-        temp=temp->next;
     }
 
-    deletePtr=temp->next;
-    temp->next=deletePtr->next;
-    delete deletePtr;
+    void insertInBetween(node* &head,int idx,int val){
+        node* n=new node(val);
+        node* temp=head;
 
+        while(idx--){
+            temp=temp->next;
+        }
+        n->next=temp->next;
+        temp->next=n;
+    }
 
-}
-void print(node* head){
-    while(head != NULL){
-        cout<<head->val<<"->";
+    void deleteFromHead(node* &head){
+        node* temp=head;
         head=head->next;
+        temp->next=NULL;
+
+        delete temp;
     }
-}
+
+    void deleteFromTail(node* &head){
+        node* temp=head;
+
+        while(temp->next->next != NULL){
+            temp=temp->next;
+        }
+        node* deletePtr=temp->next;
+        temp->next=NULL;
+        delete deletePtr;
+    }
+
+    void deleteFromBetween(node* &head,int idx){
+        node* temp=head;
+        node* deletePtr=NULL;
+        //we will access the node previous to the node that needs to be deleted
+        idx--;
+
+        while(idx--){
+            temp=temp->next;
+        }
+
+        deletePtr=temp->next;
+        temp->next=deletePtr->next;
+        delete deletePtr;
 
 
-int main(){
-    node* head=NULL;
-    insertAtTail(head,1);
-    insertAtTail(head,2);
-    insertAtTail(head,3);
-    insertAtTail(head,4);
-    insertAtTail(head,5);
-    insertInBetween(head,2,6);
+    }
+    void print(node* head){
+        while(head != NULL){
+            cout<<head->val<<"->";
+            head=head->next;
+        }
+    }
 
-    print(head);
-    deleteFromBetween(head,3);
-    deleteFromHead(head);
-    deleteFromTail(head);   
 
-}
+    int main(){
+        node* head=NULL;
+        insertAtTail(head,1);
+        insertAtTail(head,2);
+        insertAtTail(head,3);
+        insertAtTail(head,4);
+        insertAtTail(head,5);
+        insertInBetween(head,2,6);
+
+        print(head);
+        deleteFromBetween(head,3);
+        deleteFromHead(head);
+        deleteFromTail(head);   
+
+    }
 
 
 
@@ -113,21 +113,37 @@ int main(){
 //various questions on linked list
 //find middle element of linked list.
 
-int getMiddle(Node *head)
-    {
-        if(head == NULL){
-            return -1;
+    int getMiddle(Node *head)
+        {
+            if(head == NULL){
+                return -1;
+            }
+            Node* sp=head;
+            Node* fp=head;
+
+            int c=1;
+
+            while(fp != NULL && fp->next !=NULL){
+                sp=sp->next;
+                fp=fp->next->next;
+                c++;
+            }
+
+            return sp->data;
         }
-        Node* sp=head;
-        Node* fp=head;
-        
-        int c=1;
-        
-        while(fp != NULL && fp->next !=NULL){
-            sp=sp->next;
-            fp=fp->next->next;
-            c++;
+    
+  
+ //detect loop in a linked list. in this question we take fast and slow pointer and if they meet at some point then cycle is there
+     bool detectLoop(Node* head)
+        {
+            Node* sp=head;
+            Node* fp=head->next;
+            while(fp != NULL && fp->next != NULL){
+                if(fp == sp){
+                    return true;
+                }
+                fp=fp->next->next;
+                sp=sp->next;
+            }
+            return false;
         }
-        
-        return sp->data;
-    }
