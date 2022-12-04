@@ -108,6 +108,7 @@ using namespace std;
     }
 
 
+**********************************************************************************************************************************************  
 
 
 //various questions on linked list
@@ -132,9 +133,10 @@ using namespace std;
             return sp->data;
         }
     
+**********************************************************************************************************************************************  
   
- //detect loop in a linked list. in this question we take fast and slow pointer and if they meet at some point then cycle is there
-     bool detectLoop(Node* head)
+ //detect loop in a linked list. in this question we take fast and slow pointer and if they meet at some point then cycle is there.
+        bool detectLoop(Node* head)
         {
             Node* sp=head;
             Node* fp=head->next;
@@ -146,4 +148,98 @@ using namespace std;
                 sp=sp->next;
             }
             return false;
+        }    
+  -->we can use a visited map which stores whether a node has been visited or not and if loop existed in the list 
+     then there must be a node whose next node is alread visted and we can say loop exist. -->
+     
+     
+**********************************************************************************************************************************************     
+     
+
+//detect starting of a loop in a linked list. here we will use the 'Floyd loop detection algorithm'.
+        Node* detectAndRemoveLoop(Node* head)
+        {
+        // If list is empty or has only one node
+        // without loop
+        if (head == NULL || head->next == NULL)
+            return NULL;
+
+        Node *slow = head, *fast = head;
+        // Move slow and fast 1 and 2 steps
+        // ahead respectively.
+        slow = slow->next;
+        fast = fast->next->next;
+        // Search for loop using slow and
+        // fast pointers
+        while (fast && fast->next) {
+            if (slow == fast)
+                break;
+            slow = slow->next;
+            fast = fast->next->next;
         }
+        // If loop does not exist
+        if (slow != fast)
+            return NULL;
+        // If loop exists. Start slow from
+        // head and fast from meeting point.
+        slow = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
+    }
+    
+  -->this can also be done using the visted map -->
+ 
+ **********************************************************************************************************************************************  
+ 
+ 
+ //remove the loop in a linked list
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//remove duplicates in a linked list
+
+    void deleteNode(Node* &head,Node* &curr){
+    Node* temp=curr->next;
+    curr->next=temp->next;
+    
+    delete temp;
+}
+
+Node *removeDuplicates(Node *head)
+{
+    Node* curr=head;
+    
+    while(curr != NULL && curr->next != NULL){
+        if(curr->data == (curr->next)->data){
+            deleteNode(head,curr);
+        }
+        else{
+        curr=curr->next;
+        }
+    }
+    return head;
+}
+
+
+*********************************************************************************************************************************************  
