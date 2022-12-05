@@ -279,5 +279,23 @@ Node *removeDuplicates(Node *head)
   
 // here we will now use new method by taking a map of nodes and then we will check every node nd if a certain node is found in the map
     then it means that it is duplicate and we will delete this node
+   
+    Node *removeDuplicates(Node *head)
+    {
+        unordered_map<int,bool> mp;
+        Node* temp=head;
+        Node* prev;
     
-  
+        while(temp != NULL){
+            if(mp[temp->data] == true){
+                deleteNode(prev);
+                temp=prev;
+            }
+            else{
+                mp[temp->data]=true;
+                prev=temp;
+            }
+            temp=temp->next;
+        }
+        return head;
+    }
