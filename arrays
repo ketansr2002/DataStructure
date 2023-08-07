@@ -1,0 +1,22 @@
+ques1: Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+
+    void rotate(vector<int>& nums, int k) {
+        int n=nums.size();
+        
+        if(n<k){
+            k=k%n;
+        }
+        
+        // first print the last k terms of array
+        for(int j=n-1, i=n-k;i<j;i++,j--){
+            swap(nums[i],nums[j]);
+        }
+
+        // reverse first n-k elements
+        for(int i=0,j=n-k-1;i<j;i++,j--){
+            swap(nums[i],nums[j]);
+        }
+
+        // reverse the entire array
+        reverse(nums.begin(),nums.end());
+    }
